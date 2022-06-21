@@ -4,7 +4,7 @@ import { injectable, inject } from 'tsyringe';
 import authConfig from '@config/auth';
 import User from '../infra/typeorm/entities/User'
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from "../repositories/IUserRepository";
+import IUsersRepository from "../repositories/IUsersRepository";
 import FakeHashProvider from "../providers/HashProvider/fakes/FakeHashProvider";
 
 interface IRequest{

@@ -5,7 +5,7 @@ import fs  from "fs";
 import uploadConfig from "@config/upload";
 import User from "../infra/typeorm/entities/User";
 import AppError from "@shared/errors/AppError";
-import IUsersRepository from "../repositories/IUserRepository";
+import IUsersRepository from "../repositories/IUsersRepository";
 import IStorageProvider from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 
 interface IRequest {

@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from "../repositories/IUserRepository";
-import IUserTokenRepository from "../repositories/IUserTokenRepository";
+import IUsersRepository from "../repositories/IUsersRepository";
+import IUserTokenRepository from "../repositories/IUserTokensRepository";
 import IMailProvider from "@shared/container/providers/MailProvider/models/IMailProvider";
 
 interface IRequest{

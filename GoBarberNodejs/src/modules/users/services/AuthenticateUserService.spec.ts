@@ -4,18 +4,21 @@ import FakeHashProvider from "../providers/HashProvider/fakes/FakeHashProvider";
 import AppError from "@shared/errors/AppError";
 import CreateUserService from "./CreateUserService";
 
+let fakeUsersRepository: FakeUsersRepository;
+let fakeHashProvider: FakeHashProvider;
+let createUser: CreateUserService;
+let authenticateUser: AuthenticateUserService;
+
 describe('AuthenticateUser', () =>{
+
+    beforeEach(() => {
+        fakeUsersRepository = new FakeUsersRepository();
+        fakeHashProvider = new FakeHashProvider();
+        createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
+        authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider);      
+    });
     
     it('should be able to authenticate a user', async () =>{
-
-        //instance the fake repository
-        const fakeUsersRepository = new FakeUsersRepository();
-        const fakeHashProvider = new FakeHashProvider();
-
-        const createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
-
-        //use the user service by the fake repopsitory/interface
-        const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider);
 
         //call the createUsers method from the service to test
         const user = await createUser.execute({
@@ -37,14 +40,6 @@ describe('AuthenticateUser', () =>{
 
     it('should be not able to authenticate with non existing user', async () =>{
 
-        //instance the fake repository
-        const fakeUsersRepository = new FakeUsersRepository();
-
-        const fakeHashProvider = new FakeHashProvider();
-
-        //use the user service by the fake repopsitory/interface
-        const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider);
-
         await expect(
             authenticateUser.execute({
                 email: 'email@gmail.com',
@@ -55,15 +50,6 @@ describe('AuthenticateUser', () =>{
     });
 
     it('should be not able to authenticate with wrong password', async () =>{
-
-       //instance the fake repository
-       const fakeUsersRepository = new FakeUsersRepository();
-       const fakeHashProvider = new FakeHashProvider();
-
-       const createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
-
-       //use the user service by the fake repopsitory/interface
-       const authenticateUser = new AuthenticateUserService(fakeUsersRepository,fakeHashProvider );
 
        //call the createUsers method from the service to test
        await createUser.execute({
