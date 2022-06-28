@@ -12,6 +12,7 @@ Projeto desenvolvido durante o curso de NojeJS Back-end, TDD, SOLID e Typeorm, p
 ```
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
+| `user_id` | `string` |  by the session **(mandatory)** |
 | `provider_id` | `string` | the provider/baber id that will accomplish the service **(mandatory)** |
 | `date` | `date` | the appointment date **(mandatory)** |
 
@@ -23,6 +24,7 @@ Projeto desenvolvido durante o curso de NojeJS Back-end, TDD, SOLID e Typeorm, p
 ```
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
+| `user_id` | `string` |  by the session **(mandatory)** |
 | `month` | `int` | **(mandatory)** |
 | `year` | `int` | **(mandatory)** |
 
@@ -32,6 +34,7 @@ Projeto desenvolvido durante o curso de NojeJS Back-end, TDD, SOLID e Typeorm, p
 ```
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
+| `user_id` | `string` |  by the session **(mandatory)** |
 | `day` | `int` | **(mandatory)** |
 | `month` | `int` | **(mandatory)** |
 | `year` | `int` | **(mandatory)** |
@@ -73,7 +76,7 @@ Projeto desenvolvido durante o curso de NojeJS Back-end, TDD, SOLID e Typeorm, p
 ```
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `user_id` | `string` |  The user id **(mandatory)** |
+| `user_id` | `string` |  by the session **(mandatory)** |
 | `avatarFilename` | `string` | The name of the file that'll be the avatar **(mandatory)**|
 
 
@@ -103,6 +106,7 @@ Projeto desenvolvido durante o curso de NojeJS Back-end, TDD, SOLID e Typeorm, p
 ```
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
+| `user_id` | `string` |  by the session **(mandatory)** |
 | `name` | `string` |  The user name **(mandatory)** |
 | `email` | `string` |  The user email **(mandatory)** |
 | `old_password` | `string` | The user old password **(mandatory)**|
