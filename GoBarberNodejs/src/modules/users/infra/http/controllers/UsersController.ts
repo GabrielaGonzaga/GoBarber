@@ -3,7 +3,7 @@ import UpdateUserAvatarService from "@modules/users/services/UpdateUserAvatarSer
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-export default class UsersController {
+export default class ProfileController {
     public async create(request: Request, response: Response): Promise<Response>{
         const { name, email, password } = request.body;
 

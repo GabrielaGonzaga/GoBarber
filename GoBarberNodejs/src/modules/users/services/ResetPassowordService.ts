@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import differenceInHours from "date-fns/differenceInHours";
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from "../repositories/IUsersRepository";
-import IUserTokenRepository from "../repositories/IUserTokensRepository";
+import IUserTokensRepository from "../repositories/IUserTokensRepository";
 import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 import { addHours, isAfter } from "date-fns";
 
@@ -17,10 +17,10 @@ class ResetPassowordService{
 
     constructor(
         @inject('UsersRepository')
-        private usersRepository: IUsersRepository,
+        private UsersRepository: IUsersRepository,
 
         @inject('UserTokensRepository')
-        private userTokensRepository: IUserTokenRepository,
+        private userTokensRepository: IUserTokensRepository,
 
         @inject('HashProvider')
         private hashProvider: IHashProvider,
@@ -33,7 +33,7 @@ class ResetPassowordService{
             throw new AppError('User token does not exist'); 
         }
         
-        const user = await this.usersRepository.findById(userToken.user_id);
+        const user = await this.UsersRepository.findById(userToken.user_id);
 
         if(!user){
             throw new AppError('User does not exist'); 
@@ -48,7 +48,7 @@ class ResetPassowordService{
 
         user.password = await this.hashProvider.generateHash(password);
 
-        await this.usersRepository.save(user);
+        await this.UsersRepository.save(user);
     }
 }
 

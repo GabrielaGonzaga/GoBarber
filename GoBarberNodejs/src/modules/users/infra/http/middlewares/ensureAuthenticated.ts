@@ -4,7 +4,7 @@ import { verify } from "jsonwebtoken";
 import AppError from "@shared/errors/AppError";
 
 // interface with the token will have to return 
-interface TokenPayload{
+interface ITokenPayload{
     iat: number;
     exp: number;
     sub: string;
@@ -31,7 +31,7 @@ export default function ensureAuthenticated(request: Request, response: Response
         const decoded = verify(token, authConfig.jwt.secret);
 
         //get sub object from TokenPayload interface
-        const {sub} = decoded as TokenPayload;
+        const {sub} = decoded as ITokenPayload;
 
         request.user = {
             id: sub,

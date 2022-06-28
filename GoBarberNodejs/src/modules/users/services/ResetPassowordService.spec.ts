@@ -1,11 +1,11 @@
 import ResetPassowordService from './ResetPassowordService';
 import FakeUsersRepository from '../repositories/fakes/FakeUserRepository'
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import FakeUserTokenRepository from '../repositories/fakes/FakeUserTokenRepository';
+import FakeUserTokensRepository from '../repositories/fakes/FakeUserTokensRepository';
 import AppError from '@shared/errors/AppError';
 
 let fakeUsersRepository: FakeUsersRepository;
-let fakeUserTokenRepository: FakeUserTokenRepository;
+let fakeUserTokensRepository: FakeUserTokensRepository;
 let fakeHashProvider: FakeHashProvider;
 let resetPassword: ResetPassowordService;
 
@@ -13,12 +13,12 @@ describe('ResetPassowordService', () =>{
 
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
-        fakeUserTokenRepository = new FakeUserTokenRepository();
+        fakeUserTokensRepository = new FakeUserTokensRepository();
         fakeHashProvider = new FakeHashProvider();
 
         resetPassword = new ResetPassowordService(
             fakeUsersRepository, 
-            fakeUserTokenRepository,
+            fakeUserTokensRepository,
             fakeHashProvider
         );      
     });
@@ -35,7 +35,7 @@ describe('ResetPassowordService', () =>{
         });
        
         //generate a token
-        const {token} = await fakeUserTokenRepository.generate(user.id);
+        const {token} = await fakeUserTokensRepository.generate(user.id);
 
          await resetPassword.execute({
             password: '123123', 
@@ -50,7 +50,7 @@ describe('ResetPassowordService', () =>{
 
     it('should not be able reset the password with an non-existing-user', async () =>{
         
-        const {token} = await fakeUserTokenRepository.generate('non-existing-token')
+        const {token} = await fakeUserTokensRepository.generate('non-existing-token')
 
         await expect(resetPassword.execute({
             password: '123123', 
@@ -79,7 +79,7 @@ describe('ResetPassowordService', () =>{
         });
        
         //generate the token
-        const {token} = await fakeUserTokenRepository.generate(user.id);
+        const {token} = await fakeUserTokensRepository.generate(user.id);
 
         //when the method call the Date.now() function It'll execute the function writed on the mock (once)
         jest.spyOn(Date, 'now').mockImplementationOnce(() => {

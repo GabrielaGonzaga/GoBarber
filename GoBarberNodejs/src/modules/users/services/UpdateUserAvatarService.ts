@@ -1,9 +1,6 @@
 import "reflect-metadata";
 import { injectable, inject } from 'tsyringe';
-import path from 'path';
-import fs  from "fs";
-import uploadConfig from "@config/upload";
-import User from "../infra/typeorm/entities/User";
+import User from "../infra/typeorm/entities/user";
 import AppError from "@shared/errors/AppError";
 import IUsersRepository from "../repositories/IUsersRepository";
 import IStorageProvider from "@shared/container/providers/StorageProvider/models/IStorageProvider";
@@ -18,7 +15,7 @@ class UpdateUserAvatarService{
 
     constructor(
         @inject('UsersRepository')
-        private usersRepository: IUsersRepository,
+        private UsersRepository: IUsersRepository,
 
         @inject('StorageProvider')
         private storageProvider: IStorageProvider
@@ -27,7 +24,7 @@ class UpdateUserAvatarService{
     public async execute({user_id, avatarFilename}: IRequest): Promise<User>{
 
         //verify if the user_id received is the user on the model
-        const user = await this.usersRepository.findById(user_id);
+        const user = await this.UsersRepository.findById(user_id);
 
         //if don't throw error
         if(!user){
@@ -43,7 +40,7 @@ class UpdateUserAvatarService{
         
         user.avatar = filename;
 
-        await this.usersRepository.save(user);
+        await this.UsersRepository.save(user);
 
         return user;
         

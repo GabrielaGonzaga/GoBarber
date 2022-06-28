@@ -1,16 +1,40 @@
 import { uuid } from 'uuidv4'
-import isEqual from 'date-fns/isEqual';
+import {isEqual, getMonth, getYear, getDate} from 'date-fns';
 import ICreateAppointmentDTO from "@modules/appointments/dtos/ICreateAppointmentDTO";
-import IAppointmentsRepository from "@modules/appointments/dtos/ICreateAppointmentDTO";
+import IAppointmentsRepository from "@modules/appointments/repositories/IAppointmentsRepository";
 import Appointment from "../../infra/typeorm/entities/appointment";
+import IFindAllMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllMonthFromProviderDTO';
+import IFindAllDayFromProviderDTO from '@modules/appointments/dtos/IFindAllDayFromProviderDTO';
 
 
 class AppointmentsRepository implements IAppointmentsRepository{
-    
     provider_id: string;
     date: Date;
 
     private appointments: Appointment[] = [];
+
+    public async findAllInDayProvider({provider_id, day, month, year}: IFindAllDayFromProviderDTO): Promise<Appointment[]> {
+        
+        const appointments = this.appointments.filter(appointment => 
+            appointment.provider_id == provider_id && 
+            getDate(appointment.date) == day &&
+            getMonth(appointment.date) + 1 == month &&
+            getYear(appointment.date) == year
+        )
+
+        return appointments;
+    }
+
+    public async findAllInMonthProvider({provider_id, month, year}: IFindAllMonthFromProviderDTO): Promise<Appointment[]> {
+        
+        const appointments = this.appointments.filter(appointment => 
+                appointment.provider_id == provider_id && 
+                getMonth(appointment.date) + 1 == month &&
+                getYear(appointment.date) == year
+            )
+
+        return appointments;
+    }
 
     //Find Appointment By Date method
     public async findApByDate(date: Date): Promise<Appointment | undefined>{
@@ -18,11 +42,11 @@ class AppointmentsRepository implements IAppointmentsRepository{
         return findAppointment
     }
 
-    public async create({provider_id, date}: ICreateAppointmentDTO): Promise<Appointment> {
+    public async create({provider_id, user_id, date}: ICreateAppointmentDTO): Promise<Appointment> {
         const appointment = new Appointment();
 
         //declare the atributes, from the instanced class
-        Object.assign(appointment, {id:uuid(), date, provider_id});
+        Object.assign(appointment, {id:uuid(), date, user_id, provider_id});
 
         this.appointments.push(appointment);
 

@@ -76,5 +76,4 @@ describe('UpdateUserAvatar', () =>{
         //expect that the new avatar is the second on 'foto2.png'
         expect(user.avatar).toBe('foto2.png');
     });
-
 });
